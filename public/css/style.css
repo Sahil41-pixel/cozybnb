@@ -26,7 +26,7 @@ body{
 .f-info-links a{
     text-decoration: none;
     color: #222222;
-     margin-right: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .f-info-links a:hover{
@@ -49,8 +49,8 @@ body{
 
 .f-info{
     text-align: center;
-    height:8rem ;
-    background-color:#ededed;
+    height: 8rem;
+    background-color: #ededed;
     display: flex;
     flex-wrap: wrap; 
     justify-content: center;
@@ -87,20 +87,20 @@ body{
 }
 
 .card-img-overlay:hover{
-    opacity:0.2;
+    opacity: 0.2;
     background-color: white;
 }
 
 /* New Page */
 .add-btn{
-background-color: #fe424d !important;
-border: none !important;
+    background-color: #fe424d !important;
+    border: none !important;
 }
 
 /* Edit Page */
 .edit-btn{
-background-color: #fe424d !important;
-border: none !important;
+    background-color: #fe424d !important;
+    border: none !important;
 }
 
 /* Show Page */
@@ -117,7 +117,24 @@ border: none !important;
     padding-bottom: 0;
 }
 
- #map { 
-    height:400px ;
-    width: 80vh;
- }
+/* Responsive Map */
+#map { 
+    height: 400px;
+    width: 100%;
+    max-width: 100%; 
+    border-radius: 0.5rem; /* optional */
+}
+
+/* Tablet screens */
+@media (max-width: 768px) {
+    #map {
+        height: 300px;
+    }
+}
+
+/* Mobile screens */
+@media (max-width: 480px) {
+    #map {
+        height: 200px;
+    }
+}
