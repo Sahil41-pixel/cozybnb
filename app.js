@@ -32,6 +32,8 @@ main().then((res)=>{
 async function main(){
     await mongoose.connect(dbUrl);
 };
+ 
+const PORT=process.env.PORT || 8080
 
 app.use(express.json())
 app.set("view engine","ejs");
@@ -48,7 +50,7 @@ const store=MongoStore.create({
   },
   touchAfter : 24 * 3600,
 })
-store.on("error",()=>{
+store.on("error",(err)=>{
     console.log("Error in MongoDb Session", err);
 })
 
@@ -85,16 +87,6 @@ app.use((req,res,next)=>{
     next();
 });
 
-// app.get("/demouser",async (req,res)=>{
-//   let fakeUser = new User({
-//       email : "student123@gmail.com",
-//       username : "Sigma-Student"
-//     });
-
-//     let registeredUser= await User.register(fakeUser,"password1234");
-//     res.send(registeredUser);
-// })
-
 app.use("/",userRouter);
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
@@ -106,24 +98,9 @@ app.use((req, res, next) => {
 app.use((err,req,res,next)=>{
     let {statusCode=500,message="Something Went Galat"}=err;
     res.status(statusCode).render("error.ejs",{err});
-    //  res.status(statusCode).send(message);
+   
 })
 
-app.listen(8080,()=>{
+app.listen(PORT,()=>{
     console.log("Server is listening to port : 8080");
 });
-
-
-// app.get("/testListing",async (req,res)=>{
-//     let sampleListing=new Listing({
-//         title : "My New Home",
-//         description:"By the beach",
-//         price : 1200,
-//         location :"Calangute,Goa",
-//         country : "India",
-//     });
-
-//     await sampleListing.save();
-//     console.log("Sample was saved");
-//     res.send("Successful testing");
-// });

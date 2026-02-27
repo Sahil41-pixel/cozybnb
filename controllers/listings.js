@@ -24,9 +24,8 @@ module.exports.showListing = async (req, res) => {
     .populate("owner");
   if (!listing) {
     req.flash("error", "Listing you requested for doesn't exist!");
-    res.redirect("/listings");
+    return res.redirect("/listings");
   }
-  //    console.log(listing)
   res.render("listings/show", { listing });
 };
 
@@ -35,10 +34,14 @@ module.exports.createListing = async (req, res) => {
     req.body.listing.location,
     {
       limit: 1,
-    }
+    },
   );
-  let url = req.file.path;
-  let filename = req.file.filename;
+  if (!req.file) {
+    throw new ExpressError(400, "Image is required");
+  }
+
+  let { path: url, filename } = req.file;
+
   let newListing = new Listing(req.body.listing);
   newListing.owner = req.user._id;
   newListing.image = { url, filename };
