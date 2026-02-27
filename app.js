@@ -73,6 +73,10 @@ app.get("/",(req,res)=>{
 app.set("trust proxy", 1);
 app.use(session(sessionOptions));
 app.use(flash());
+app.use((req, res, next) => {
+  res.locals.mapToken = process.env.MAP_TOKEN;
+  next();
+});
 
 app.use(passport.initialize());
 app.use(passport.session());
