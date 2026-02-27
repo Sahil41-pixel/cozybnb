@@ -41,7 +41,7 @@ app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended : true}));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
-app.use(express.static(path.join(__dirname,"/public")));
+app.use(express.static(path.join(__dirname,"public")));
 
 const store=MongoStore.create({
   mongoUrl : dbUrl,
@@ -70,6 +70,7 @@ app.get("/",(req,res)=>{
     res.redirect("/listings");
 });
 
+app.set("trust proxy", 1);
 app.use(session(sessionOptions));
 app.use(flash());
 
@@ -102,5 +103,5 @@ app.use((err,req,res,next)=>{
 })
 
 app.listen(port,()=>{
-    console.log("Server is listening to port : 8080");
+    console.log(`Server is listening to port : ${port}`);
 });
